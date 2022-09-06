@@ -1,0 +1,14 @@
+PKG nginx php82 phpMyAdmin5-php82
+
+#CP root /
+
+MOUNT /usr/ports usr/ports nullfs ro 0 0 
+
+SYSRC php_fpm_enable=YES
+SYSRC nginx_enable=YES
+
+SERVICE php-fpm start
+SERVICE nginx start
+
+#CMD /root/bootstrap-wp.sh
+
