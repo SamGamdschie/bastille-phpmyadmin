@@ -1,4 +1,6 @@
-PKG nginx php82 phpMyAdmin5-php82
+ARG php-version=82
+
+PKG nginx htop php${php-version} phpMyAdmin5-php${php-version}
 
 #CP root /
 
@@ -6,16 +8,14 @@ CMD mkdr -p /www/certificates
 CMD mkdir -p /usr/local/etc/git_config/nginx
 CMD mkdir -p /usr/local/etc/git_config/php
 
-MOUNT /usr/ports usr/ports nullfs ro 0 0 
+
 MOUNT /werzel/certificates www/certificates nullfs ro 0 0
 MOUNT /werzel/server_config/nginx usr/local/etc/git_config/nginx nullfs ro 0 0
 MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
 
 # Link Configurations to /usr/local/etc/ from /usr/local/etc/git_config/*/
-CMD rm -rf /usr/local/www/nextcloud/config/config.php
-CMD ln -s /usr/local/www/nextcloud/config/config.php /usr/local/etc/git_config/nextcloud/config.php
-CMD ln -s /usr/local/etc/nginx/sites.d/myadmin.conf /usr/local/etc/git_config/nginx/myadmin.conf
-CMD ln -s /usr/local/etc/php/sites.conf/myadmin.conf /usr/local/etc/git_config/php/myadmin.conf
+CMD ln -s /usr/local/etc/git_config/nginx/myadmin.conf /usr/local/etc/nginx/sites.d/myadmin.conf
+CMD ln -s /usr/local/etc/git_config/php/myadmin.conf /usr/local/etc/php/sites.conf/myadmin.conf 
 
 
 SYSRC php_fpm_enable=YES
