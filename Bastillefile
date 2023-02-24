@@ -4,7 +4,7 @@ PKG nginx htop php${php-version} phpMyAdmin5-php${php-version}
 
 #CP root /
 
-CMD mkdr -p /www/certificates 
+CMD mkdir -p /www/certificates 
 CMD mkdir -p /usr/local/etc/git_config/nginx
 CMD mkdir -p /usr/local/etc/git_config/php
 
@@ -16,7 +16,6 @@ MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
 # Link Configurations to /usr/local/etc/ from /usr/local/etc/git_config/*/
 CMD ln -s /usr/local/etc/git_config/nginx/myadmin.conf /usr/local/etc/nginx/sites.d/myadmin.conf
 CMD ln -s /usr/local/etc/git_config/php/myadmin.conf /usr/local/etc/php/sites.conf/myadmin.conf 
-
 
 SYSRC php_fpm_enable=YES
 SYSRC nginx_enable=YES
