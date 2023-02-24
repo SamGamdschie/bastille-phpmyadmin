@@ -13,15 +13,17 @@ MOUNT /werzel/certificates www/certificates nullfs ro 0 0
 MOUNT /werzel/server_config/nginx usr/local/etc/git_config/nginx nullfs ro 0 0
 MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
 
-# Link Configurations to /usr/local/etc/ from /usr/local/etc/git_config/*/
-CMD ln -s /usr/local/etc/git_config/nginx/myadmin.conf /usr/local/etc/nginx/sites.d/myadmin.conf
-CMD ln -s /usr/local/etc/git_config/php/myadmin.conf /usr/local/etc/php/sites.conf/myadmin.conf 
+# Link Configurations 
+CMD rm -rf /usr/local/etc/nginx/nginx.conf
+CMD ln -s /usr/local/etc/git_config/nginx/myadmin.conf /usr/local/etc/nginx/nginx.conf
+CMD ln -s /usr/local/etc/git_config/php/myadmin.conf /usr/local/etc/php-fpm.d/myadmin.conf
+
+#Create additional Dirs
+CMD mkdir -p /www/vhosts
+CMD chown www:www /www/vhosts
 
 SYSRC php_fpm_enable=YES
 SYSRC nginx_enable=YES
 
 SERVICE php-fpm start
 SERVICE nginx start
-
-#CMD /root/bootstrap-wp.sh
-
