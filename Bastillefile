@@ -1,6 +1,6 @@
 ARG php-version=82
 
-PKG nginx htop php${php-version} phpMyAdmin5-php${php-version}
+PKG nginx htop portmaster php${php-version} phpMyAdmin5-php${php-version}
 
 #CP root /
 
@@ -8,19 +8,25 @@ CMD mkdir -p /www/certificates
 CMD mkdir -p /usr/local/etc/git_config/nginx
 CMD mkdir -p /usr/local/etc/git_config/php
 
-
 MOUNT /werzel/certificates www/certificates nullfs ro 0 0
 MOUNT /werzel/server_config/nginx usr/local/etc/git_config/nginx nullfs ro 0 0
 MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
+
+CMD portsnap auto
+CMD pkg delete -fy phpMyAdmin5-php${php-version}
+CMD portmaster --no-confirm --packages-build --delete-build-only databases/phpmyadmin
 
 # Link Configurations 
 CMD rm -rf /usr/local/etc/nginx/nginx.conf
 CMD ln -s /usr/local/etc/git_config/nginx/myadmin.conf /usr/local/etc/nginx/nginx.conf
 CMD ln -s /usr/local/etc/git_config/php/myadmin.conf /usr/local/etc/php-fpm.d/myadmin.conf
 
-#Create additional Dirs
+#Create additional Dirs for TMP / Session
 CMD mkdir -p /www/vhosts
-CMD chown www:www /www/vhosts
+CMD mkdir -p /www/vhosts/tmp
+CMD mkdir -p /www/vhosts/sessions
+CMD mkdir -p /www/vhosts/upload_tmp
+CMD chown -R www:www /www/vhosts
 
 SYSRC php_fpm_enable=YES
 SYSRC nginx_enable=YES
