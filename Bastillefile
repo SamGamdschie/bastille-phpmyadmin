@@ -7,19 +7,24 @@ PKG nginx htop portmaster php${php-version} phpMyAdmin5-php${php-version}
 CMD mkdir -p /www/certificates 
 CMD mkdir -p /usr/local/etc/git_config/nginx
 CMD mkdir -p /usr/local/etc/git_config/php
+CMD mkdir -p /usr/local/etc/git_config/phpmyadmin
 
 MOUNT /werzel/certificates www/certificates nullfs ro 0 0
 MOUNT /werzel/server_config/nginx usr/local/etc/git_config/nginx nullfs ro 0 0
 MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
+MOUNT /werzel/server_config/phpmyadmin usr/local/etc/git_config/phpmyadmin nullfs ro 0 0
 
 CMD portsnap auto
-CMD pkg delete -fy phpMyAdmin5-php${php-version}
-CMD portmaster --no-confirm --packages-build --delete-build-only databases/phpmyadmin
+#CMD pkg delete -fy phpMyAdmin5-php${php-version}
+#CMD portmaster --no-confirm --packages-build --delete-build-only databases/phpmyadmin
 
 # Link Configurations 
 CMD rm -rf /usr/local/etc/nginx/nginx.conf
+CMD rm -rf /usr/local/www/phpMyAdmin/config.inc.php
 CMD ln -s /usr/local/etc/git_config/nginx/myadmin.conf /usr/local/etc/nginx/nginx.conf
 CMD ln -s /usr/local/etc/git_config/php/myadmin.conf /usr/local/etc/php-fpm.d/myadmin.conf
+CMD ln -s /usr/local/etc/git_config/phpmyadmin/config.inc.php /usr/local/www/phpMyAdmin/config.inc.php
+CMD chown www:www /usr/local/www/phpMyAdmin/config.inc.php
 
 #Create additional Dirs for TMP / Session
 CMD mkdir -p /www/vhosts
