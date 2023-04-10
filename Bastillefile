@@ -3,7 +3,6 @@ ARG php-version=82
 PKG nginx htop portmaster php${php-version} phpMyAdmin5-php${php-version}
 
 #CP root /
-
 CMD mkdir -p /www/certificates 
 CMD mkdir -p /usr/local/etc/git_config/nginx
 CMD mkdir -p /usr/local/etc/git_config/php
@@ -14,7 +13,7 @@ MOUNT /werzel/server_config/nginx usr/local/etc/git_config/nginx nullfs ro 0 0
 MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
 MOUNT /werzel/server_config/phpmyadmin usr/local/etc/git_config/phpmyadmin nullfs ro 0 0
 
-CMD portsnap auto
+#CMD portsnap auto
 #CMD pkg delete -fy phpMyAdmin5-php${php-version}
 #CMD portmaster --no-confirm --packages-build --delete-build-only databases/phpmyadmin
 
