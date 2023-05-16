@@ -1,4 +1,5 @@
 ARG php-version=82
+ARG mailip=10.0.0.10
 
 PKG nginx htop portmaster php${php-version} phpMyAdmin5-php${php-version}
 
