@@ -1,7 +1,10 @@
 ARG php-version=82
 ARG mailip=10.0.0.10
 
-PKG nginx htop portmaster php${php-version} phpMyAdmin5-php${php-version}
+PKG nginx htop portmaster
+PKG php${php-version} php${php-version}-extensions 
+PKG php${php-version}-mysqli php${php-version}-pdo_mysql 
+PKG phpMyAdmin5-php${php-version}
 
 #CP root /
 CMD mkdir -p /www/certificates 
