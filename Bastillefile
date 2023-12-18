@@ -15,7 +15,7 @@ CMD mkdir -p /usr/local/etc/git_config/phpmyadmin
 MOUNT /werzel/certificates www/certificates nullfs ro 0 0
 MOUNT /werzel/server_config/nginx usr/local/etc/git_config/nginx nullfs ro 0 0
 MOUNT /werzel/server_config/php usr/local/etc/git_config/php nullfs ro 0 0
-MOUNT /werzel/server_config/phpmyadmin usr/local/etc/git_config/phpmyadmin nullfs ro 0 0
+MOUNT /werzel/server_config/phpmyadmin usr/local/etc/git_config/phpmyadmin nullfs rw 0 0
 
 #CMD portsnap auto
 #CMD pkg delete -fy phpMyAdmin5-php${php-version}
